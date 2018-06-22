@@ -8,9 +8,11 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 
 import {
     createStackNavigator,
-    createMaterialTopTabNavigator,
+    createBottomTabNavigator
 } from 'react-navigation';
 
+import NewsItem from '../news/NewsItem'
+import NewsDetail from '../news/NewsDetail'
 import News from '../news/News'
 import Joker from '../joker/Joker'
 import Today from '../today/Today'
@@ -35,7 +37,7 @@ export default class Main extends Component {
     }
 }
 
-const Tab = createMaterialTopTabNavigator({
+const Tab = createBottomTabNavigator({
     News: {
         screen: News,
         navigationOptions: ({navigations}) => {
@@ -93,12 +95,11 @@ const Tab = createMaterialTopTabNavigator({
         },
     },
 }, {
-    //设置TabNavigator的位置
-    tabBarPosition: 'bottom',
     //是否在更改标签时显示动画
     animationEnabled: true,
     //是否允许在标签之间进行滑动
     swipeEnabled: true,
+    lazy: true,
     tabBarOptions: {
         indicatorStyle: {//标签指示器的样式对象（选项卡底部的行）。安卓底部会多出一条线，可以将height设置为0来暂时解决这个问题
             height: 0,
