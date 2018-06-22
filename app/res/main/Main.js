@@ -149,6 +149,9 @@ const navigationOptions = {
 const Navigator = createStackNavigator({
     Tab: {
         screen: Tab,
+    },
+    NewsDetail: {
+        screen: NewsDetail
     }
 }, navigationOptions);
 

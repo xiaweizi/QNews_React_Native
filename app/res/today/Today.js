@@ -4,7 +4,7 @@
  * desc:
  */
 import React, {Component} from 'react';
-import {Dimensions, StyleSheet, ToastAndroid, FlatList} from 'react-native';
+import {Dimensions, StyleSheet, ToastAndroid, FlatList, TouchableOpacity} from 'react-native';
 import {
     Container,
     Header,
@@ -20,13 +20,12 @@ import Color from "../utils/Color";
 import Size from "../utils/Size";
 
 const url = 'http://v.juhe.cn/todayOnhistory/queryEvent.php?key=f5f7d655ef148f6bb777c80167f7f6de&date=';
-const {width, height} = Dimensions.get('window');
 
 export default class Today extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:[
+            data: [
                 // {
                 //     title: '罗马共和国开始使用儒略历1',
                 //     date: '前45年01月01日',
@@ -49,14 +48,15 @@ export default class Today extends Component {
                 // },
             ],
             refreshing: false,
-            loadingVisible: true,
+            loadingVisible: false,
         };
     };
 
     render() {
         return (
             <Container>
-                <Header style={{backgroundColor: Color.main_color}} androidStatusBarColor={Color.main_color_primary}>
+                <Header style={{backgroundColor: Color.main_color}}
+                        androidStatusBarColor={Color.main_color_primary}>
                     <Body>
                     <Title style={{marginLeft: Size.public_margin}}>历史上的今天</Title>
                     </Body>
@@ -65,7 +65,9 @@ export default class Today extends Component {
                     <FlatList
                         data={this.state.data}
                         keyExtractor={this.keyExtractor}
-                        renderItem={this.getView}
+                        renderItem={({item, index}) => {
+                            return this.getView(item, this.props.navigation)
+                        }}
                         numColumns={2}
                         horizontal={false}
                         //下拉刷新，必须设置refreshing状态
@@ -92,21 +94,27 @@ export default class Today extends Component {
         this.getData()
     };
 
-    getView({item}) {
+    getView(item, navigation) {
         //这里返回的就是每个Item
         return (
-            <Card style={styles.today_card} >
-                <CardItem >
-                    <Body>
-                    <Text>
-                        {item.title}
-                    </Text>
+            <Card style={styles.today_card}>
+                <TouchableOpacity activeOpacity={0.8}
+                                  onPress={() => {
+                                      // navigation.navigate('NewsDetail')
+                                  }}>
+                    <CardItem>
+                        <Body>
+                        <Text>
+                            {item.title}
+                        </Text>
 
-                    <Text style={styles.today_date}>
-                        {item.date}
-                    </Text>
-                    </Body>
-                </CardItem>
+                        <Text style={styles.today_date}>
+                            {item.date}
+                        </Text>
+                        </Body>
+                    </CardItem>
+                </TouchableOpacity>
+
             </Card>
         )
     };
@@ -117,7 +125,7 @@ export default class Today extends Component {
 
     getData() {
         let nowDate = new Date();
-        let date = nowDate.getMonth() + 1 + '/' + nowDate.getDate()
+        let date = nowDate.getMonth() + 1 + '/' + nowDate.getDate();
         fetch(url + date)
             .then((response) => response.json())
             .then((response) => {
@@ -162,9 +170,7 @@ const styles = StyleSheet.create({
     },
     today_card: {
         flex: 1,
-        justifyContent: 'center',
-        shadowRadius: 20,
-        shadowColor: 'red',
+        justifyContent: 'center'
     },
     today_date: {
         marginTop: Size.public_margin / 2,
