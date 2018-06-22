@@ -4,7 +4,17 @@
  * desc:
  */
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {
+    Container,
+    Header,
+    Body,
+    Title,
+    View,
+    Text,
+} from 'native-base';
+import Color from "../utils/Color";
+import Size from "../utils/Size";
 
 export default class Today extends Component {
     constructor(props) {
@@ -16,11 +26,18 @@ export default class Today extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text>
-                    Today
-                </Text>
-            </View>
+            <Container>
+                <Header style={{backgroundColor: Color.main_color}} androidStatusBarColor={Color.main_color_primary}>
+                    <Body>
+                    <Title style={{marginLeft: Size.public_margin}}>历史上的今天</Title>
+                    </Body>
+                </Header>
+                <View style={styles.container}>
+                    <Text>
+                        Today
+                    </Text>
+                </View>
+            </Container>
         );
     }
 }

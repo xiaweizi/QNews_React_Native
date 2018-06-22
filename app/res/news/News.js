@@ -7,12 +7,18 @@ import React, {Component} from 'react';
 import {YellowBox} from 'react-native';
 
 import NewsItem from "./NewsItem";
-import {Container, Header, Content, Tab, Tabs, ScrollableTab} from 'native-base';
-import Color from "../utils/Color";
 import {
-    createStackNavigator,
-} from 'react-navigation';
-import NewsDetail from "./NewsDetail";
+    Container,
+    Header,
+    Tab,
+    Tabs,
+    ScrollableTab,
+    Body,
+    Title
+} from 'native-base';
+import Color from "../utils/Color";
+import Size from "../utils/Size";
+
 
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
@@ -25,6 +31,11 @@ export default class News extends Component {
     render() {
         return (
             <Container>
+                <Header style={{backgroundColor: Color.main_color}} androidStatusBarColor={Color.main_color_primary}>
+                    <Body>
+                    <Title style={{marginLeft: Size.public_margin}}>新闻</Title>
+                    </Body>
+                </Header>
                 <Tabs tabBarBackgroundColor={Color.white}
                       tabBarUnderlineStyle={{backgroundColor: Color.main_red}}
                       renderTabBar={() => <ScrollableTab/>}>

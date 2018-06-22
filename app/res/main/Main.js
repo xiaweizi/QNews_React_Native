@@ -141,7 +141,7 @@ const navigationOptions = {
             }
         }
     },
-    headerMode: 'screen',
+    headerMode: 'none',
     mode: 'card',
 };
 
