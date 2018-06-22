@@ -40,12 +40,14 @@ export default class NewsItem extends Component {
                 //     title: 'tittitletitletitletitletitletitletitltittitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitleleetitletitletitletitletitletitletitletitletitlele',
                 //     date: "2018-06-21 18:51",
                 //     author_name: '金十数据',
-                //     uniquekey: 'da'
+                //     uniquekey: 'da',
+                //     url:'http://xiaweizi.cn'
                 // }
             ], //存储列表使用的数据
             refreshing: false, //当前的刷新状态
             loadingVisible: true,
             type: props.type,
+            navigation: props.navigation
         };
     };
 
@@ -55,7 +57,9 @@ export default class NewsItem extends Component {
                 <FlatList
                     data={this.state.data}
                     keyExtractor={this.keyExtractor}
-                    renderItem={this.getView}
+                    renderItem={({item})=>{
+                        return this.getView(item, this.props.navigation)
+                    }}
 
                     //下拉刷新，必须设置refreshing状态
                     onRefresh={this.onRefresh}
@@ -70,12 +74,16 @@ export default class NewsItem extends Component {
         );
     }
 
-    getView({item}) {
+    getView(item, navigation) {
         //这里返回的就是每个Item
         return (
             <TouchableOpacity activeOpacity={0.8}
                               onPress={() => {
-                                  NewsItem.onItemClick(item)
+                                  console.log('NewsItem', item.url);
+                                  navigation.navigate("NewsDetail", {
+                                      url: item.url,
+                                      title: item.title
+                                  })
                               }}>
                 <View style={styles.item}>
                     <View style={styles.news_content}>
@@ -95,12 +103,6 @@ export default class NewsItem extends Component {
             </TouchableOpacity>
         )
     };
-
-    static onItemClick(item) {
-        let url = item.url;
-        ToastAndroid.show(item.title, ToastAndroid.SHORT);
-
-    }
 
     keyExtractor = (item, index) => item.uniquekey;
 

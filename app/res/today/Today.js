@@ -48,7 +48,7 @@ export default class Today extends Component {
                 // },
             ],
             refreshing: false,
-            loadingVisible: false,
+            loadingVisible: true,
         };
     };
 

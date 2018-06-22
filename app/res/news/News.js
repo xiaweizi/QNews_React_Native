@@ -14,7 +14,9 @@ import {
     Tabs,
     ScrollableTab,
     Body,
-    Title
+    Title,
+    Text,
+    View
 } from 'native-base';
 import Color from "../utils/Color";
 import Size from "../utils/Size";
@@ -31,7 +33,8 @@ export default class News extends Component {
     render() {
         return (
             <Container>
-                <Header style={{backgroundColor: Color.main_color}} androidStatusBarColor={Color.main_color_primary}>
+                <Header style={{backgroundColor: Color.main_color}}
+                        androidStatusBarColor={Color.main_color_primary}>
                     <Body>
                     <Title style={{marginLeft: Size.public_margin}}>新闻</Title>
                     </Body>
@@ -39,12 +42,12 @@ export default class News extends Component {
                 <Tabs tabBarBackgroundColor={Color.white}
                       tabBarUnderlineStyle={{backgroundColor: Color.main_red}}
                       renderTabBar={() => <ScrollableTab/>}
-                        style={{height:12}}>
+                      style={{height: 12}}>
                     <Tab heading="头条" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}
                          textStyle={{color: 'black'}}>
-                        <NewsItem type='top'/>
+                        <NewsItem type='top' navigation={this.props.navigation}/>
                     </Tab>
                     <Tab heading="社会" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
