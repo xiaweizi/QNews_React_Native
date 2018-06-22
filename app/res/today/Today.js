@@ -40,6 +40,10 @@ export default class Today extends Component {
             </Container>
         );
     }
+
+    componentDidMount() {
+
+    }
 }
 
 const styles = StyleSheet.create({

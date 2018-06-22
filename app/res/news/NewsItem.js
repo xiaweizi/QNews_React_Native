@@ -40,7 +40,7 @@ export default class NewsItem extends Component {
                 //     title: 'tittitletitletitletitletitletitletitltittitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitleleetitletitletitletitletitletitletitletitletitlele',
                 //     date: "2018-06-21 18:51",
                 //     author_name: '金十数据',
-                //     uniquekey:'da'
+                //     uniquekey: 'da'
                 // }
             ], //存储列表使用的数据
             refreshing: false, //当前的刷新状态
@@ -155,8 +155,8 @@ export default class NewsItem extends Component {
         this.setState({
             loadingVisible: false,
             refreshing: false,
-        }),
-            ToastAndroid.show(msg, ToastAndroid.SHORT);
+        });
+        ToastAndroid.show(msg, ToastAndroid.SHORT);
     }
 }
 
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     item: {
-        width: width,
+        width: width - 10,
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
