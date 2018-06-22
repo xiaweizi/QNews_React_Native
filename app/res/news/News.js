@@ -38,7 +38,8 @@ export default class News extends Component {
                 </Header>
                 <Tabs tabBarBackgroundColor={Color.white}
                       tabBarUnderlineStyle={{backgroundColor: Color.main_red}}
-                      renderTabBar={() => <ScrollableTab/>}>
+                      renderTabBar={() => <ScrollableTab/>}
+                        style={{height:12}}>
                     <Tab heading="头条" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}

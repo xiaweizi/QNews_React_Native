@@ -4,7 +4,7 @@
  * desc:
  */
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet, ToastAndroid, FlatList} from 'react-native';
 import {
     Container,
     Header,
@@ -12,15 +12,44 @@ import {
     Title,
     View,
     Text,
+    Card,
+    CardItem
 } from 'native-base';
+import Loading from '../utils/Loading'
 import Color from "../utils/Color";
 import Size from "../utils/Size";
+
+const url = 'http://v.juhe.cn/todayOnhistory/queryEvent.php?key=f5f7d655ef148f6bb777c80167f7f6de&date=';
+const {width, height} = Dimensions.get('window');
 
 export default class Today extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            data:[
+                // {
+                //     title: '罗马共和国开始使用儒略历1',
+                //     date: '前45年01月01日',
+                //     e_id: '1',
+                // },
+                // {
+                //     title: '罗马共和国开始使用儒略历2',
+                //     date: '前45年01月01日',
+                //     e_id: '2',
+                // },
+                // {
+                //     title: '罗马共和国开始使用儒略历3',
+                //     date: '前45年01月01日',
+                //     e_id: '3',
+                // },
+                // {
+                //     title: '罗马共和国开始使用儒略历4',
+                //     date: '前45年01月01日',
+                //     e_id: '4',
+                // },
+            ],
+            refreshing: false,
+            loadingVisible: true,
         };
     };
 
@@ -33,16 +62,96 @@ export default class Today extends Component {
                     </Body>
                 </Header>
                 <View style={styles.container}>
-                    <Text>
-                        Today
-                    </Text>
+                    <FlatList
+                        data={this.state.data}
+                        keyExtractor={this.keyExtractor}
+                        renderItem={this.getView}
+                        numColumns={2}
+                        horizontal={false}
+                        //下拉刷新，必须设置refreshing状态
+                        onRefresh={this.onRefresh}
+                        refreshing={this.state.refreshing}
+                    />
+                    {
+                        this.state.loadingVisible ? (
+                            <Loading/>
+                        ) : null
+                    }
                 </View>
             </Container>
         );
     }
 
-    componentDidMount() {
+    keyExtractor = (item, index) => item.e_id;
+    onRefresh = () => {
+        //设置刷新状态为正在刷新
+        this.setState({
+            refreshing: true,
+            loadingVisible: true,
+        });
+        this.getData()
+    };
 
+    getView({item}) {
+        //这里返回的就是每个Item
+        return (
+            <Card style={styles.today_card} >
+                <CardItem >
+                    <Body>
+                    <Text>
+                        {item.title}
+                    </Text>
+
+                    <Text style={styles.today_date}>
+                        {item.date}
+                    </Text>
+                    </Body>
+                </CardItem>
+            </Card>
+        )
+    };
+
+    componentDidMount() {
+        this.getData();
+    }
+
+    getData() {
+        let nowDate = new Date();
+        let date = nowDate.getMonth() + 1 + '/' + nowDate.getDate()
+        fetch(url + date)
+            .then((response) => response.json())
+            .then((response) => {
+                //解析json数据
+                this.onSuccess(response)
+            })
+            .catch((error) => {
+                if (error) {
+                    //网络错误处理
+                    this.onFailed(error.getMessage())
+                }
+            });
+    }
+
+    onSuccess(response) {
+        console.log('Joker', response);
+        if (response.error_code == 0) {
+
+            this.setState({
+                data: response.result,
+                loadingVisible: false,
+                refreshing: false,
+            })
+        } else {
+            this.onFailed(response.reason)
+        }
+    }
+
+    onFailed(msg) {
+        this.setState({
+            loadingVisible: false,
+            refreshing: false,
+        });
+        ToastAndroid.show(msg, ToastAndroid.SHORT)
     }
 }
 
@@ -50,6 +159,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+    },
+    today_card: {
+        flex: 1,
+        justifyContent: 'center',
+        shadowRadius: 20,
+        shadowColor: 'red',
+    },
+    today_date: {
+        marginTop: Size.public_margin / 2,
+        alignSelf: 'flex-end',
+        color: Color.sub_text_color,
+        fontSize: Size.sub_text_size
     }
 });
