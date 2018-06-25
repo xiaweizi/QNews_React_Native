@@ -55,6 +55,7 @@ export default class NewsItem extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
+                    showsVerticalScrollIndicator={false}
                     data={this.state.data}
                     keyExtractor={this.keyExtractor}
                     renderItem={({item})=>{

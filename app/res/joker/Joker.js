@@ -48,6 +48,7 @@ export default class Joker extends Component {
                 </Header>
                 <View style={styles.container}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
                         data={this.state.data}
                         keyExtractor={this.keyExtractor}
                         renderItem={this.getView}

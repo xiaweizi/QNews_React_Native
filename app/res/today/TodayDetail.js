@@ -35,7 +35,8 @@ export default class TodayDetail extends Component {
             title: '',
             content: '',
             loadingVisible: true,
-            pic: ['1'],
+            pic: [],
+            swipeShow: false, // 控制滚动图片是否展示
         };
     };
 
@@ -44,13 +45,12 @@ export default class TodayDetail extends Component {
         this.state.pic.forEach(item => {
             console.log('TodayDetail', item);
             pages.push(
-                    <View style={{height: 200, flex: 1}}  key={'key'}>
+                    <View style={{height: 250}}  key={'key'}>
                         <Image style={{flex: 1}}
                                source={{uri: item.url}}/>
                     </View>
             )
         });
-        let v = pages == null;
         return (
             <Container>
                 <Header style={{backgroundColor: Color.main_color}}
@@ -73,9 +73,11 @@ export default class TodayDetail extends Component {
                 <View style={styles.container}>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <View>
-                            <Swiper style={styles.today_detail_swiper} autoplay={true} hidden={true}>
-                                {pages}
-                            </Swiper>
+                            {
+                                this.state.swipeShow ? <Swiper style={styles.today_detail_swiper} autoplay={true} >
+                                    {pages}
+                                </Swiper> : null
+                            }
                             <Card style={styles.today_detail_content_card}>
                                 <Text style={{fontSize: Size.main_text_size}}>
                                     {this.state.content}
@@ -122,6 +124,10 @@ export default class TodayDetail extends Component {
                 content: response.result[0].content,
                 loadingVisible: false,
                 pic: response.result[0].picUrl
+            });
+            let visible = response.result[0].picUrl.length !== 0;
+            this.setState({
+                swipeShow: visible
             })
         } else {
             this.onFailed(response.reason)
@@ -147,12 +153,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
+        marginTop: Size.public_margin,
         paddingLeft: Size.public_margin,
         paddingRight: Size.public_margin,
+        paddingTop: Size.public_margin / 2,
         width: width - Size.public_margin * 2,
     },
     today_detail_swiper: {
         width: width,
-        height: 150,
+        height: 250,
     }
 });
