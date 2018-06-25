@@ -227,7 +227,7 @@ class SendItem extends Component {
                     {this.state.content}
                 </Text>
                 <Image
-                    source={require('../../src/send.jpg')}
+                    source={require('../../src/send.png')}
                     style={styles.send_image}
                 />
             </View>
@@ -250,7 +250,7 @@ class ReceiverItem extends Component {
                 flexDirection: 'row',
             }}>
                 <Image
-                    source={require('../../src/receiver.jpg')}
+                    source={require('../../src/receiver.png')}
                     style={styles.send_image}
                 />
                 <Text style={{
