@@ -100,7 +100,9 @@ export default class Today extends Component {
             <Card style={styles.today_card}>
                 <TouchableOpacity activeOpacity={0.8}
                                   onPress={() => {
-                                      // navigation.navigate('NewsDetail')
+                                      navigation.navigate('TodayDetail', {
+                                          e_id: item.e_id
+                                      })
                                   }}>
                     <CardItem>
                         <Body>

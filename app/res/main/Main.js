@@ -19,6 +19,7 @@ import Today from '../today/Today'
 import Robot from '../robot/Robot'
 
 import {YellowBox} from 'react-native';
+import TodayDetail from "../today/TodayDetail";
 
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
@@ -100,7 +101,7 @@ const Tab = createBottomTabNavigator({
     //是否允许在标签之间进行滑动
     swipeEnabled: true,
     lazy: true,
-    // initialRouteName: 'Today',
+    initialRouteName: 'Today',
     tabBarOptions: {
         indicatorStyle: {//标签指示器的样式对象（选项卡底部的行）。安卓底部会多出一条线，可以将height设置为0来暂时解决这个问题
             height: 0,
@@ -152,6 +153,9 @@ const Navigator = createStackNavigator({
     },
     NewsDetail: {
         screen: NewsDetail
+    },
+    TodayDetail: {
+        screen: TodayDetail
     }
 }, navigationOptions);
 
