@@ -59,7 +59,7 @@ export default class NewsItem extends Component {
                     data={this.state.data}
                     keyExtractor={this.keyExtractor}
                     renderItem={({item})=>{
-                        return this.getView(item, this.props.navigation)
+                        return this.getView(item, this.state.navigation)
                     }}
 
                     //下拉刷新，必须设置refreshing状态
