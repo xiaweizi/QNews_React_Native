@@ -79,11 +79,11 @@ export default class TodayDetail extends Component {
                                     {pages}
                                 </Swiper> : null
                             }
-                            <Card style={styles.today_detail_content_card}>
-                                <Text style={{fontSize: Size.main_text_size}}>
+                            <View style={styles.today_detail_content_card}>
+                                <Text style={{fontSize: Size.middle_text_size, color: Color.main_text_color}}>
                                     {this.state.content}
                                 </Text>
-                            </Card>
+                            </View>
                         </View>
                     </ScrollView>
 
@@ -159,9 +159,21 @@ const styles = StyleSheet.create({
         paddingRight: Size.public_margin,
         paddingTop: Size.public_margin / 2,
         width: width - Size.public_margin * 2,
+        shadowColor: '#ccc',
+        shadowOffset: {width: 2, height: 2,},
+        shadowOpacity: 0.5,
+        shadowRadius: 10,
+        backgroundColor: Color.white,
+        borderWidth: 0,
+        borderRadius: 5,
+        borderColor: 'rgba(0,0,0,0.1)',
+        padding: Size.public_margin,
+        elevation: 3,
+        overflow: 'hidden',
     },
     today_detail_swiper: {
         width: width,
         height: 250,
+        marginTop: Size.public_margin,
     }
 });

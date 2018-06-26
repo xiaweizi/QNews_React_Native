@@ -98,27 +98,23 @@ export default class Today extends Component {
     getView(item, navigation) {
         //这里返回的就是每个Item
         return (
-            <Card style={styles.today_card}>
+            <View style={styles.today_card}>
                 <TouchableOpacity activeOpacity={0.8}
                                   onPress={() => {
                                       navigation.navigate('TodayDetail', {
                                           e_id: item.e_id
                                       })
                                   }}>
-                    <CardItem>
-                        <Body>
-                        <Text>
+                        <Text style={{color: Color.main_text_color, fontSize: Size.middle_text_size}}>
                             {item.title}
                         </Text>
 
                         <Text style={styles.today_date}>
                             {item.date}
                         </Text>
-                        </Body>
-                    </CardItem>
                 </TouchableOpacity>
 
-            </Card>
+            </View>
         )
     };
 
@@ -173,7 +169,20 @@ const styles = StyleSheet.create({
     },
     today_card: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderWidth: 0,
+        borderRadius: 5,
+        borderColor: 'rgba(0,0,0,0.1)',
+        backgroundColor: '#fff',
+        margin: 5,
+        height: 120,
+        padding: 15,
+        shadowColor: '#ccc',
+        shadowOffset: {width: 2, height: 2,},
+        shadowOpacity: 0.5,
+        shadowRadius: 10,
+        elevation: 3,
+        overflow: 'hidden',
     },
     today_date: {
         marginTop: Size.public_margin / 2,

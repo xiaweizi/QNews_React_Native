@@ -94,19 +94,14 @@ export default class Joker extends Component {
     getView({item}) {
         //这里返回的就是每个Item
         return (
-            <Card style={styles.joker_card}>
-                <CardItem >
-                    <Body>
-                    <Text>
+            <View style={styles.joker_card}>
+                    <Text style={{fontSize: Size.middle_text_size, color: Color.main_text_color}}>
                         {item.content}
                     </Text>
-
                     <Text style={styles.joker_date}>
                         {item.updatetime}
                     </Text>
-                    </Body>
-                </CardItem>
-            </Card>
+            </View>
         )
     };
 
@@ -172,14 +167,25 @@ const styles = StyleSheet.create({
     },
     joker_card: {
         flex: 1,
+        flexDirection: 'column',
         justifyContent: 'center',
-        marginLeft: 6,
+        margin: 5,
         width: width - Size.public_margin,
-        marginRight: Size.public_margin
+        shadowColor: '#ccc',
+        shadowOffset: {width: 2, height: 2,},
+        shadowOpacity: 0.5,
+        shadowRadius: 10,
+        backgroundColor: Color.white,
+        borderWidth: 0,
+        borderRadius: 5,
+        borderColor: 'rgba(0,0,0,0.1)',
+        padding: Size.public_margin,
+        elevation: 3,
+        overflow: 'hidden',
     },
     joker_date: {
         marginTop: Size.public_margin / 2,
         alignSelf: 'flex-end',
-        color: Color.sub_text_colorm
+        color: Color.sub_text_color,
     }
 });
