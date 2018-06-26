@@ -20,7 +20,7 @@ import Loading from "../utils/Loading";
 import String from "../utils/String";
 
 const {width, height} = Dimensions.get('window');
-const url = 'http://op.juhe.cn/robot/index?key=98b8f13ededd2f7e1d593819a6bb3639&info=';
+const url = 'http://op.juhe.cn/robot/index?userid=12&key=98b8f13ededd2f7e1d593819a6bb3639&info=';
 export default class Robot extends Component {
     constructor(props) {
         super(props);
