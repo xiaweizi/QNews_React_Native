@@ -21,6 +21,7 @@ import Size from '../utils/Size'
 import String from '../utils/String'
 
 import NewsDetail from "./NewsDetail";
+import NetworkFailureLayout from "../utils/NetworkFailureLayout";
 
 const {width, height} = Dimensions.get('window');
 
@@ -48,7 +49,8 @@ export default class NewsItem extends Component {
             refreshing: false, //当前的刷新状态
             loadingVisible: true,
             type: props.type,
-            navigation: props.navigation
+            navigation: props.navigation,
+            netErrorVisible: false,
         };
     };
 
@@ -59,7 +61,7 @@ export default class NewsItem extends Component {
                     showsVerticalScrollIndicator={false}
                     data={this.state.data}
                     keyExtractor={this.keyExtractor}
-                    renderItem={({item})=>{
+                    renderItem={({item}) => {
                         return this.getView(item, this.state.navigation)
                     }}
 
@@ -70,6 +72,17 @@ export default class NewsItem extends Component {
                 {
                     this.state.loadingVisible ? (
                         <Loading/>
+                    ) : null
+                }
+                {
+                    this.state.netErrorVisible ? (
+                        <NetworkFailureLayout retryClick={()=>{
+                            this.setState({
+                               loadingVisible: true,
+                               netErrorVisible: false,
+                            });
+                            this.getData()
+                        }} />
                     ) : null
                 }
             </View>
@@ -133,11 +146,9 @@ export default class NewsItem extends Component {
                 this.onSuccess(response)
             })
             .catch((error) => {
-                if (error) {
-                    //网络错误处理
-                    console.log('error', error);
-                    this.onFailed(String.public_net_error)
-                }
+                //网络错误处理
+                console.log('error', error);
+                this.onFailed(String.public_net_error)
             });
     }
 
@@ -148,7 +159,7 @@ export default class NewsItem extends Component {
                 data: response.result.data,
                 loadingVisible: false,
                 refreshing: false,
-
+                netErrorVisible: false,
             });
         } else {
             this.onFailed(response.reason)
@@ -160,6 +171,7 @@ export default class NewsItem extends Component {
         this.setState({
             loadingVisible: false,
             refreshing: false,
+            netErrorVisible: true,
         });
         ToastAndroid.show(msg, ToastAndroid.SHORT);
     }

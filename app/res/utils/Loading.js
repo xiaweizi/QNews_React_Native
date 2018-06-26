@@ -39,7 +39,6 @@ const loadStyles=StyleSheet.create({
         height:Dimensions.get('window').height,
         width:Dimensions.get('window').width,
         zIndex:10,
-
     },
     box:{
         paddingVertical:12,

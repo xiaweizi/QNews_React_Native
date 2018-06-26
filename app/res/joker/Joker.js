@@ -19,6 +19,7 @@ import Loading from '../utils/Loading'
 import Color from "../utils/Color";
 import Size from "../utils/Size";
 import String from "../utils/String";
+import NetworkFailureLayout from "../utils/NetworkFailureLayout";
 
 const url = 'http://v.juhe.cn/joke/content/text.php?key=ae240f7fba620fc370b803566654949e&pagesize=10&page=';
 const {width, height} = Dimensions.get('window');
@@ -26,7 +27,7 @@ export default class Joker extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:[
+            data: [
                 // {
                 //     content: '日老爸老妈因为某事吵个不休，我忍不住吼他们：“吵什么吵，都老夫老妻了，不能包容包容吗，我跟我男朋友就从来不吵，就不能学学我？”然后……他们反应过来后男女混合双打。为什么？因为家里不给早恋……………',
                 //     updatetime: '2018-06-22 13:55:00',
@@ -35,6 +36,7 @@ export default class Joker extends Component {
             ],
             refreshing: false,
             loadingVisible: true,
+            netErrorVisible: false,
             page: 1,
         };
     };
@@ -42,7 +44,8 @@ export default class Joker extends Component {
     render() {
         return (
             <Container>
-                <Header style={{backgroundColor: Color.main_color}} androidStatusBarColor={Color.main_color_primary}>
+                <Header style={{backgroundColor: Color.main_color}}
+                        androidStatusBarColor={Color.main_color_primary}>
                     <Body>
                     <Title style={{marginLeft: Size.public_margin}}>段子</Title>
                     </Body>
@@ -67,6 +70,19 @@ export default class Joker extends Component {
                             <Loading/>
                         ) : null
                     }
+                    {
+                        this.state.netErrorVisible ? (
+                            <NetworkFailureLayout retryClick={() => {
+                                this.setState({
+                                    refreshing: true,
+                                    loadingVisible: true,
+                                    page: 1,
+                                    netErrorVisible: false,
+                                });
+                                this.getData(1)
+                            }}/>
+                        ) : null
+                    }
                 </View>
             </Container>
         );
@@ -81,7 +97,7 @@ export default class Joker extends Component {
             loadingVisible: true,
             page: 1
         });
-       this.getData(1)
+        this.getData(1)
     };
 
     onLoadMore = (info: { distanceFromEnd: number }) => {
@@ -95,12 +111,12 @@ export default class Joker extends Component {
         //这里返回的就是每个Item
         return (
             <View style={styles.joker_card}>
-                    <Text style={{fontSize: Size.middle_text_size, color: Color.main_text_color}}>
-                        {item.content}
-                    </Text>
-                    <Text style={styles.joker_date}>
-                        {item.updatetime}
-                    </Text>
+                <Text style={{fontSize: Size.middle_text_size, color: Color.main_text_color}}>
+                    {item.content}
+                </Text>
+                <Text style={styles.joker_date}>
+                    {item.updatetime}
+                </Text>
             </View>
         )
     };
@@ -119,10 +135,8 @@ export default class Joker extends Component {
                 this.onSuccess(response)
             })
             .catch((error) => {
-                if (error) {
-                    //网络错误处理
-                    this.onFailed(String.public_net_error)
-                }
+                //网络错误处理
+                this.onFailed(String.public_net_error)
             });
     }
 
@@ -143,7 +157,8 @@ export default class Joker extends Component {
             this.setState({
                 loadingVisible: false,
                 refreshing: false,
-                page: page
+                page: page,
+                netErrorVisible: false,
             })
         } else {
             this.onFailed(response.reason)
@@ -154,6 +169,7 @@ export default class Joker extends Component {
         this.setState({
             loadingVisible: false,
             refreshing: false,
+            netErrorVisible: true,
         });
         ToastAndroid.show(msg, ToastAndroid.SHORT)
     }

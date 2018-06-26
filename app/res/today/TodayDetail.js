@@ -25,6 +25,7 @@ const {width, height} = Dimensions.get('window');
 import Loading from '../utils/Loading'
 import Swiper from 'react-native-swiper';
 import String from "../utils/String";
+import NetworkFailureLayout from "../utils/NetworkFailureLayout";
 
 
 const url = 'http://v.juhe.cn/todayOnhistory/queryDetail.php?key=f5f7d655ef148f6bb777c80167f7f6de&e_id=';
@@ -38,6 +39,7 @@ export default class TodayDetail extends Component {
             loadingVisible: true,
             pic: [],
             swipeShow: false, // 控制滚动图片是否展示
+            netErrorVisible: false,
         };
     };
 
@@ -46,10 +48,10 @@ export default class TodayDetail extends Component {
         this.state.pic.forEach(item => {
             console.log('TodayDetail', item);
             pages.push(
-                    <View style={{height: 250}}  key={'key'}>
-                        <Image style={{flex: 1}}
-                               source={{uri: item.url}}/>
-                    </View>
+                <View style={{height: 250}} key={'key'}>
+                    <Image style={{flex: 1}}
+                           source={{uri: item.url}}/>
+                </View>
             )
         });
         return (
@@ -75,12 +77,16 @@ export default class TodayDetail extends Component {
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <View>
                             {
-                                this.state.swipeShow ? <Swiper style={styles.today_detail_swiper} autoplay={true} >
-                                    {pages}
-                                </Swiper> : null
+                                this.state.swipeShow ?
+                                    <Swiper style={styles.today_detail_swiper} autoplay={true}>
+                                        {pages}
+                                    </Swiper> : null
                             }
                             <View style={styles.today_detail_content_card}>
-                                <Text style={{fontSize: Size.middle_text_size, color: Color.main_text_color}}>
+                                <Text style={{
+                                    fontSize: Size.middle_text_size,
+                                    color: Color.main_text_color
+                                }}>
                                     {this.state.content}
                                 </Text>
                             </View>
@@ -91,6 +97,17 @@ export default class TodayDetail extends Component {
                 {
                     this.state.loadingVisible ? (
                         <Loading/>
+                    ) : null
+                }
+                {
+                    this.state.netErrorVisible ? (
+                        <NetworkFailureLayout retryClick={()=>{
+                            this.getData();
+                            this.setState({
+                                netErrorVisible: false,
+                                loadingVisible: true,
+                            })
+                        }} />
                     ) : null
                 }
             </Container>
@@ -110,10 +127,8 @@ export default class TodayDetail extends Component {
                 this.onSuccess(response)
             })
             .catch((error) => {
-                if (error) {
-                    //网络错误处理
-                    this.onFailed(String.public_net_error)
-                }
+                //网络错误处理
+                this.onFailed(String.public_net_error)
             });
     }
 
@@ -128,7 +143,8 @@ export default class TodayDetail extends Component {
             });
             let visible = response.result[0].picUrl.length !== 0;
             this.setState({
-                swipeShow: visible
+                swipeShow: visible,
+                netErrorVisible: false,
             })
         } else {
             this.onFailed(response.reason)
@@ -138,6 +154,7 @@ export default class TodayDetail extends Component {
     onFailed(msg) {
         this.setState({
             loadingVisible: false,
+            netErrorVisible: true,
         });
         ToastAndroid.show(msg, ToastAndroid.SHORT)
     }

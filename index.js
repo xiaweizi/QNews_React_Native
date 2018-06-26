@@ -4,6 +4,6 @@ import { AppRegistry } from 'react-native';
 
 import Main from './app/res/main/Main';
 AppRegistry.registerComponent('QNews', () => Main);
-
-// import NewsDetail from './app/res/news/NewsDetail';
-// AppRegistry.registerComponent('QNews', () => NewsDetail);
+//
+// import NetworkFailureLayout from './app/res/utils/NetworkFailureLayout';
+// AppRegistry.registerComponent('QNews', () => NetworkFailureLayout);

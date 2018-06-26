@@ -19,6 +19,7 @@ import Loading from '../utils/Loading'
 import Color from "../utils/Color";
 import Size from "../utils/Size";
 import String from "../utils/String";
+import NetworkFailureLayout from "../utils/NetworkFailureLayout";
 
 const url = 'http://v.juhe.cn/todayOnhistory/queryEvent.php?key=f5f7d655ef148f6bb777c80167f7f6de&date=';
 
@@ -50,6 +51,7 @@ export default class Today extends Component {
             ],
             refreshing: false,
             loadingVisible: true,
+            netErrorVisible: false,
         };
     };
 
@@ -80,6 +82,18 @@ export default class Today extends Component {
                             <Loading/>
                         ) : null
                     }
+                    {
+                        this.state.netErrorVisible ? (
+                                <NetworkFailureLayout retryClick={() => {
+                                    this.setState({
+                                        loadingVisible: true,
+                                        netErrorVisible: false,
+                                    });
+                                    this.getData()
+                                }
+                                }/>)
+                            : null
+                    }
                 </View>
             </Container>
         );
@@ -105,13 +119,13 @@ export default class Today extends Component {
                                           e_id: item.e_id
                                       })
                                   }}>
-                        <Text style={{color: Color.main_text_color, fontSize: Size.middle_text_size}}>
-                            {item.title}
-                        </Text>
+                    <Text style={{color: Color.main_text_color, fontSize: Size.middle_text_size}}>
+                        {item.title}
+                    </Text>
 
-                        <Text style={styles.today_date}>
-                            {item.date}
-                        </Text>
+                    <Text style={styles.today_date}>
+                        {item.date}
+                    </Text>
                 </TouchableOpacity>
 
             </View>
@@ -132,10 +146,8 @@ export default class Today extends Component {
                 this.onSuccess(response)
             })
             .catch((error) => {
-                if (error) {
                     //网络错误处理
-                    this.onFailed(String.public_net_error)
-                }
+                this.onFailed(String.public_net_error)
             });
     }
 
@@ -147,6 +159,7 @@ export default class Today extends Component {
                 data: response.result,
                 loadingVisible: false,
                 refreshing: false,
+                netErrorVisible: false,
             })
         } else {
             this.onFailed(response.reason)
@@ -157,6 +170,7 @@ export default class Today extends Component {
         this.setState({
             loadingVisible: false,
             refreshing: false,
+            netErrorVisible: true,
         });
         ToastAndroid.show(msg, ToastAndroid.SHORT)
     }
