@@ -53,55 +53,55 @@ export default class News extends Component {
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}
                          textStyle={{color: 'black'}}>
-                        <NewsItem type='shehui'/>
+                        <NewsItem type='shehui' navigation={this.props.navigation}/>
                     </Tab>
                     <Tab heading="国内" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}
                          textStyle={{color: 'black'}}>
-                        <NewsItem type='guonei'/>
+                        <NewsItem type='guonei' navigation={this.props.navigation}/>
                     </Tab>
                     <Tab heading="国际" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}
                          textStyle={{color: 'black'}}>
-                        <NewsItem type='国际'/>
+                        <NewsItem type='国际' navigation={this.props.navigation}/>
                     </Tab>
                     <Tab heading="娱乐" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}
                          textStyle={{color: 'black'}}>
-                        <NewsItem type='yule'/>
+                        <NewsItem type='yule' navigation={this.props.navigation}/>
                     </Tab>
                     <Tab heading="体育" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}
                          textStyle={{color: 'black'}}>
-                        <NewsItem type='tiyu'/>
+                        <NewsItem type='tiyu' navigation={this.props.navigation}/>
                     </Tab>
                     <Tab heading="军事" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}
                          textStyle={{color: 'black'}}>
-                        <NewsItem type='junshi'/>
+                        <NewsItem type='junshi' navigation={this.props.navigation}/>
                     </Tab>
                     <Tab heading="科技" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}
                          textStyle={{color: 'black'}}>
-                        <NewsItem type='keji'/>
+                        <NewsItem type='keji' navigation={this.props.navigation}/>
                     </Tab>
                     <Tab heading="财经" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}
                          textStyle={{color: 'black'}}>
-                        <NewsItem type='caijing'/>
+                        <NewsItem type='caijing' navigation={this.props.navigation}/>
                     </Tab>
                     <Tab heading="时尚" tabStyle={{backgroundColor: Color.white}}
                          activeTabStyle={{backgroundColor: Color.white}}
                          activeTextStyle={{color: Color.main_red}}
                          textStyle={{color: 'black'}}>
-                        <NewsItem type='shishang'/>
+                        <NewsItem type='shishang' navigation={this.props.navigation}/>
                     </Tab>
                 </Tabs>
             </Container>
