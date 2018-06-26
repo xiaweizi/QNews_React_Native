@@ -18,6 +18,7 @@ import {
 import Loading from '../utils/Loading'
 import Color from "../utils/Color";
 import Size from "../utils/Size";
+import String from "../utils/String";
 
 const url = 'http://v.juhe.cn/joke/content/text.php?key=ae240f7fba620fc370b803566654949e&pagesize=10&page=';
 const {width, height} = Dimensions.get('window');
@@ -125,7 +126,7 @@ export default class Joker extends Component {
             .catch((error) => {
                 if (error) {
                     //网络错误处理
-                    this.onFailed(error.getMessage())
+                    this.onFailed(String.public_net_error)
                 }
             });
     }

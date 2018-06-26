@@ -24,6 +24,7 @@ import Size from "../utils/Size";
 const {width, height} = Dimensions.get('window');
 import Loading from '../utils/Loading'
 import Swiper from 'react-native-swiper';
+import String from "../utils/String";
 
 
 const url = 'http://v.juhe.cn/todayOnhistory/queryDetail.php?key=f5f7d655ef148f6bb777c80167f7f6de&e_id=';
@@ -111,7 +112,7 @@ export default class TodayDetail extends Component {
             .catch((error) => {
                 if (error) {
                     //网络错误处理
-                    this.onFailed(error.getMessage())
+                    this.onFailed(String.public_net_error)
                 }
             });
     }

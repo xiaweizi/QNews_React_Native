@@ -18,6 +18,7 @@ import {
 import Loading from '../utils/Loading'
 import Color from "../utils/Color";
 import Size from "../utils/Size";
+import String from "../utils/String";
 
 const url = 'http://v.juhe.cn/todayOnhistory/queryEvent.php?key=f5f7d655ef148f6bb777c80167f7f6de&date=';
 
@@ -137,7 +138,7 @@ export default class Today extends Component {
             .catch((error) => {
                 if (error) {
                     //网络错误处理
-                    this.onFailed(error.getMessage())
+                    this.onFailed(String.public_net_error)
                 }
             });
     }

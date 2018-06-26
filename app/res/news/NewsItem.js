@@ -18,6 +18,7 @@ import {createStackNavigator} from 'react-navigation';
 import Loading from "../utils/Loading";
 import Color from '../utils/Color'
 import Size from '../utils/Size'
+import String from '../utils/String'
 
 import NewsDetail from "./NewsDetail";
 
@@ -135,6 +136,7 @@ export default class NewsItem extends Component {
                 if (error) {
                     //网络错误处理
                     console.log('error', error);
+                    this.onFailed(String.public_net_error)
                 }
             });
     }
